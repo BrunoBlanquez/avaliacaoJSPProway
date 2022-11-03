@@ -53,6 +53,27 @@ public class DaoPost {
         }
         return lista;
     }
+    public static List<Post> listarDezPostagens() {
+        List<Post> lista = new ArrayList<Post>();
+        Connection con = Conexao.conectar();
+        if(con != null) {
+            try {
+                PreparedStatement stm = con.prepareStatement("select * from post limit 10");
+                ResultSet rs = stm.executeQuery();
+                while(rs.next()) {
+                    Post p = new Post();
+                    p.setId(rs.getInt("id"));
+                    p.setTitulo(rs.getString("titulo"));
+                    p.setDescricao(rs.getString("descricao"));
+
+                    lista.add(p);
+                }
+            } catch (SQLException e) {
+                return lista;
+            }
+        }
+        return lista;
+    }
 
     public static Post consultarIndividual(int idPost) {
         Connection con = Conexao.conectar();

@@ -6,6 +6,7 @@ public class Usuario {
     private String email;
     private String usuario;
     private String senha;
+    private String tipo;
 
     public Usuario() {
     }
@@ -15,6 +16,14 @@ public class Usuario {
         this.email = email;
         this.usuario = usuario;
         this.senha = senha;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 
     public int getId() {

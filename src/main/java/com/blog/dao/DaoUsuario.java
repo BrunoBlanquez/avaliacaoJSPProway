@@ -23,7 +23,8 @@ public class DaoUsuario {
                 if(rs.next()){
                     usuario.setId(rs.getInt("id"));
                     usuario.setEmail(rs.getString("email"));
-                    usuario.setSenha(rs.getString("email"));
+                    usuario.setSenha(rs.getString("senha"));
+                    usuario.setTipo(rs.getString("tipo"));
                 }
             } catch (SQLException e) {
                 e.printStackTrace();

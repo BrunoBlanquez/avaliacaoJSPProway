@@ -1,7 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <%@ page import="com.blog.entidades.Usuario" %>
 <%@ page import="com.blog.dao.DaoUsuario" %>
-<%@ page import="com.blog.dao.DaoModerador" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -20,17 +19,15 @@
 </head>
 <body>
 <%
-    Usuario userLogado = (Usuario) session.getAttribute("usuario");
-    Object adminLogado = session.getAttribute("admin");
-
+    Usuario usuarioLogado = (Usuario) session.getAttribute("usuario");
     boolean logado = true;
-    if(userLogado == null || adminLogado == null) {
+
+    if(usuarioLogado == null) {
         logado = false;
     }
 
-    System.out.println(logado);
-%>
 
+%>
 <main class="container">
     <div class="position-absolute top-0 end-0">
         <a href="index.jsp"><button type="submit" class="btn btn-primary">Página inicial</button></a>
@@ -53,12 +50,11 @@
         </form>
     <% } %>
 
-    <% if(logado != false) { %>
-    <button type="submit" class="btn btn-danger" id="logout" class="oculto" onclick="logout()">Sair</button>
+    <% if(logado) { %>
+        <button type="submit" class="btn btn-danger" id="logout" class="oculto" onclick="logout()">Sair</button>
     <% } %>
 
     </div>
-
 <script>
     const botaoSair = document.getElementById("logout")
 
@@ -76,10 +72,9 @@
 
             if(DaoUsuario.podeLogar(user, senha)) {
                 session.setAttribute("usuario", usuario);
-            } else if(DaoModerador.podeLogar(user, senha)) {
-                session.setAttribute("admin","admin");
+                response.sendRedirect("login.jsp");
             } else {
-                out.write("<h3>Não foi possível acessar a conta</h3>");
+                out.write("<h3>Não foi possível logar</h3>");
             }
         }
 

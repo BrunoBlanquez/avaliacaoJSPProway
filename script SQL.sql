@@ -16,7 +16,6 @@ create table moderadores(
     senha varchar(35)
 );
 
-insert into moderadores(nome, email, usuario, senha) values("moderador1", "moderacao@gmail.com", "mod1", "111111");
 
 create table post(
 	id int primary key auto_increment,
@@ -33,8 +32,9 @@ create table comentarios(
     constraint fk_post foreign key (idPost) references post(id),
     autorizado varchar(10) default false
 );
+insert into usuarios(nome, email, usuario, senha, tipo) values("moderador1", "moderacao@gmail.com", "mod1", "111111", "admin");
 
-
+select * from moderadores;
 select * from usuarios;
 select * from post;
 select * from comentarios;

@@ -1,6 +1,8 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <%@page import="com.blog.entidades.Post" %>
 <%@page import="com.blog.dao.DaoPost" %>
+<%@ page import="com.blog.entidades.Usuario" %>
+<%@ page import="com.blog.dao.DaoUsuario" %>
 <%@page import="java.util.List" %>
 
 <!DOCTYPE html>
@@ -21,11 +23,16 @@
             white-space: nowrap;
         }
 
-        .admin {
-            display: none;
-        }
     </style>
 </head>
+<%
+    Usuario usuarioLogado = (Usuario) session.getAttribute("usuario");
+    boolean logado = false;
+
+    if(usuarioLogado != null && usuarioLogado.getTipo().equals("admin")) {
+        logado = true;
+    }
+%>
 <body onload="mostraComandosAdmin()">
 <main class="container">
     <div class="position-absolute top-0 end-0">
@@ -33,7 +40,7 @@
         <a href="login.jsp"><button type="submit" class="btn btn-primary">Login</button></a>
     </div>
     <div class="position-absolute top-0 start-50 translate-middle-x">
-        <h2>Postagens recentes</h2>
+        <h2>lista completa de postatens</h2>
         <table class="table table-striped table-hover">
             <thead>
                 <tr>
@@ -41,8 +48,10 @@
                     <th scope="col">Titulo</th>
                     <th scope="col">Descricao</th>
                     <th scope="col">Ver mais</th>
+                    <% if(logado) { %>
                     <th class="admin" id="thAdmin" scope="col">Editar</th>
                     <th class="admin" id="thAdmin" scope="col">Excluir</th>
+                    <% } %>
                 </tr>
             </thead>
             <tbody>
@@ -54,37 +63,20 @@
                         out.write("<td>" + p.getTitulo() + "</td>");
                         out.write("<td class=ellipsis>" + p.getDescricao() + "</td>");
                         out.write("<td><a href='postcompleto.jsp?id=" + p.getId() + "'>" + "Ver mais" + "</a>" + "</td>");
-                        out.write("<td class=admin id=tdAdmin><a href='editar.jsp?id=" + p.getId() +"'>Editar</a></td>");
-                        out.write("<td class=admin id=tdAdmin><a href='delete.jsp?id=" + p.getId() +"'>Deletar</a></td>");
+                        if(logado) {
+                            out.write("<td class=admin id=tdAdmin><a href='editar.jsp?id=" + p.getId() +"'>Editar</a></td>");
+                            out.write("<td class=admin id=tdAdmin><a href='delete.jsp?id=" + p.getId() +"'>Deletar</a></td>");
+                        }
                         out.write("</tr>");
                     }
                 %>
             </tbody>
         </table>
-        <button type="submit" class="btn btn-primary" onclick="mostraComandosAdmin()">Página inicial</button>
     </div>
     <div class="position-absolute top-0 end-0">
         <a href="index.jsp"><button type="submit" class="btn btn-primary">Página inicial</button></a>
         <a href="login.jsp"><button type="submit" class="btn btn-primary">Login</button></a>
     </div>
 </main>
-<script>
-    const mostraComandosAdmin = () => {
-    const thAdmin = document.querySelectorAll(".admin")
-    const tdAdmin = document.querySelectorAll("admin")
-
-    if(sessionStorage.getItem("admin")) {
-        thAdmin.forEach(e => {
-            e.classList.remove("admin");
-        })
-
-        } else {
-            thAdmin.forEach(e => {
-                e.classList.add("admin");
-            })
-        }
-    }
-
-</script>
 </body>
 </html>
