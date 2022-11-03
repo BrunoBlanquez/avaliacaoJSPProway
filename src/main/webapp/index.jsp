@@ -71,7 +71,9 @@
         <a href="cadastro.jsp"><button type="submit" class="btn btn-primary">Cadastre-se</button></a>
 
             <% if(logado) { %>
-            <a class="admin" href="novopost.jsp"><button type="submit" class="btn btn-primary">Nova publicação</button></a>
+            <a class="admin" href="novopost.jsp"><button type="submit" class="btn btn-success">Nova publicação</button></a>
+            <a class="admin" href="lista-comentarios-pendentes.jsp"><button type="submit" class="btn btn-success">Autorizar Comentarios</button></a>
+
             <% } %>
 
             <a href="postagens.jsp"><button type="submit" class="btn btn-primary">Ver todas as postagens</button></a>

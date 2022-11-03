@@ -17,9 +17,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous" defer></script>
 </head>
-<script>
 
-</script>
 <body>
 <main class="container">
 
@@ -53,35 +51,57 @@
                 </div>
             </div>
         </form>
+        <div style="border: 2px solid black; padding: 5px">
+            <h3>Comentarios</h3>
+
+            <%
+                List<Comentario> listaComentarios = DaoComentario.consultarTodos();
+                for(Comentario c : listaComentarios) {
+                    if(c.isAutorizado() == true) {
+                        out.write("<span>" + c.getComentario() +"</span></br>");
+                    }
+                }
+            %>
+        </div>
 
         <% if(logado == false) { %>
             <h3 class="" id="avisoLogado">É preciso estar logado para comentar!</h3>
         <% } %>
 
-        <div class="comentarios" id="comentarios">
-            <h3>Deixe seu comentário</h3>
-            <form action="postcompleto.jsp?id=<%=p.getId()%>" method="POST" class="">
-                <div class="mb-3">
-                    <div class="form-floating">
-                        <textarea class="form-control" placeholder="Publicação" name="inputComentario" maxlength="500" id="inputComentario" style="resize: none; height: 100px"></textarea>
-                        <label for="inputComentario">Máx 200 char</label>
+        <% if(logado ) { %>
+            <div class="comentarios" id="comentarios">
+                <h3>Deixe seu comentário</h3>
+                <form action="postcompleto.jsp?id=<%=p.getId()%>" method="POST" class="">
+                    <div class="mb-3">
+                        <div class="form-floating">
+                            <textarea class="form-control" placeholder="Publicação" name="inputComentario" maxlength="500" id="inputComentario" style="resize: none; height: 100px"></textarea>
+                            <label for="inputComentario">Máx 200 char</label>
+                        </div>
                     </div>
-                </div>
-                <button type="submit" class="btn btn-primary">Comentar!</button>
-            </form>
-        </div>
+                    <button type="submit" class="btn btn-primary">Comentar!</button>
+                </form>
+            </div>
+        <% } %>
+
     </div>
 <%
     String comentario = request.getParameter("inputComentario");
-    String post = request.getParameter("id");
-    int idUser = usuarioLogado.getId();
+    int idPost = Integer.parseInt(pegaIdParameter);
 
-
-    if(comentario != null && !(comentario.isEmpty())) {
-        Comentario c = new Comentario(comentario, idUser, pegaIdParameter);
-        String retorno = DaoComentario.salvar(c);
-        response.sendRedirect("postagens.jsp");
+    if(logado) {
+        int idUser = usuarioLogado.getId();
+        if(comentario != null && !(comentario.isEmpty())) {
+                Comentario c = new Comentario();
+                c.setComentario(comentario);
+                c.setUsuarioComentario(idUser);
+                c.setIdPost(idPost);
+                String retorno = DaoComentario.salvar(c);
+                response.sendRedirect("postagens.jsp");
+            }
     }
+
+
+
 %>
 
     <div class="position-absolute top-0 end-0">

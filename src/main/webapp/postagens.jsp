@@ -24,7 +24,7 @@
         logado = true;
     }
 %>
-<body onload="mostraComandosAdmin()">
+<body>
 <main class="container">
     <div class="position-absolute top-0 end-0">
         <a href="index.jsp"><button type="submit" class="btn btn-primary">Página inicial</button></a>
@@ -40,8 +40,8 @@
                     <th scope="col">Descricao</th>
                     <th scope="col">Ver mais</th>
                     <% if(logado) { %>
-                    <th class="admin" id="thAdmin" scope="col">Editar</th>
-                    <th class="admin" id="thAdmin" scope="col">Excluir</th>
+                        <th class="admin" id="thAdmin" scope="col">Editar</th>
+                        <th class="admin" id="thAdmin" scope="col">Excluir</th>
                     <% } %>
                 </tr>
             </thead>

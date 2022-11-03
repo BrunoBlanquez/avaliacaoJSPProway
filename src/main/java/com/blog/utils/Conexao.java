@@ -9,7 +9,7 @@ public class Conexao {
         Connection con = null;
         String url = "jdbc:mysql://localhost/blog";
         String user = "root";
-        String password = "250855";
+        String password = "xxx";
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException e) {

@@ -55,4 +55,22 @@ public class DaoComentario {
         }
         return comentarios;
     }
+
+    public static String aprovar(int idComentario) {
+        Connection con = Conexao.conectar();
+
+        if(con != null) {
+            String sql = "update comentarios set autorizado = true where id = ?";
+
+            try {
+                PreparedStatement stm = con.prepareStatement(sql);
+                stm.setInt(1, idComentario);
+                stm.execute();
+                return "Registro alterado com sucesso!";
+            } catch (SQLException e) {
+                return "Não foi possível alterar";
+            }
+        }
+        return "Erro de conexão";
+    }
 }
