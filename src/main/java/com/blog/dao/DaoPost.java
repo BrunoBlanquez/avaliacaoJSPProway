@@ -105,10 +105,8 @@ public class DaoPost {
 
                 stm.setString(2, p.getDescricao());
                 stm.setInt(3, p.getId());
+
                 stm.execute();
-                System.out.println(p.getTitulo());
-                System.out.println(p.getDescricao());
-                System.out.println(p.getId());
                 return "Registro alterado com sucesso";
             } catch (SQLException e) {
                 return "Não foi possível alterar registro";

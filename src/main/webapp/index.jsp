@@ -29,6 +29,7 @@
     if(usuarioLogado != null && usuarioLogado.getTipo().equals("admin")) {
         logado = true;
     }
+
 %>
 </head>
 <body>

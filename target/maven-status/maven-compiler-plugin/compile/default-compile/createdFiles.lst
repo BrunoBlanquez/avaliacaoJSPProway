@@ -1,4 +1,5 @@
 com\blog\utils\Conexao.class
+com\blog\dao\DaoComentario.class
 com\blog\dao\DaoPost.class
 com\blog\entidades\Usuario.class
 com\blog\dao\DaoUsuario.class

@@ -1,6 +1,10 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <%@page import="com.blog.entidades.Post" %>
 <%@page import="com.blog.dao.DaoPost" %>
+<%@page import="com.blog.entidades.Usuario" %>
+<%@page import="com.blog.dao.DaoUsuario" %>
+<%@page import="com.blog.entidades.Comentario" %>
+<%@page import="com.blog.dao.DaoComentario" %>
 <%@page import="java.util.List" %>
 
 <!DOCTYPE html>
@@ -12,11 +16,6 @@
     <title>Consulta</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous" defer></script>
-<style>
-    .oculto {
-        display: none;
-    }
-</style>
 </head>
 <script>
 
@@ -27,6 +26,14 @@
 <%
     String pegaIdParameter = request.getParameter("id");
     Post p = DaoPost.consultarIndividual(Integer.parseInt(pegaIdParameter));
+
+    Usuario usuarioLogado = (Usuario) session.getAttribute("usuario");
+    boolean logado = false;
+
+    if(usuarioLogado != null) {
+        logado = true;
+    }
+    System.out.println(usuarioLogado.getTipo());
 %>
 
     <div class="position-absolute top-0 end-0">
@@ -46,9 +53,12 @@
                     <label for="inputTexto">Publicação</label>
                 </div>
             </div>
-
         </form>
-        <h3 class="" id="avisoLogado">É preciso estar logado para comentar!</h3>
+
+        <% if(logado == false) { %>
+            <h3 class="" id="avisoLogado">É preciso estar logado para comentar!</h3>
+        <% } %>
+
         <div class="comentarios" id="comentarios">
             <h3>Deixe seu comentário</h3>
             <form action="postcompleto.jsp?id=<%=p.getId()%>" method="POST" class="">
@@ -66,11 +76,11 @@
     String comentario = request.getParameter("inputComentario");
     String post = request.getParameter("id");
 
-    if(comentario != null) {
-        p.setTitulo(titulo);
-        p.setDescricao(texto);
 
-        String retorno = DaoPost.alterar(p);
+
+
+    if(comentario != null) {
+       Comentario c = new Comentario();
         response.sendRedirect("postagens.jsp");
     }
 %>
@@ -80,15 +90,5 @@
         <a href="login.jsp"><button type="submit" class="btn btn-primary">Login</button></a>
     </div>
 </main>
-<script>
-
-    if(sessionStorage.getItem("login") || sessionStorage.getItem("admin")) {
-        const comentarios = document.getElementById("comentarios").classList.remove("oculto");
-        const avisoLogado = document.getElementById("avisoLogado").classList.add("oculto");
-    } else {
-        const comentarios = document.getElementById("comentarios").classList.add("oculto");
-        const avisoLogado = document.getElementById("avisoLogado").classList.remove("oculto");
-    }
-</script>
 </body>
 </html>

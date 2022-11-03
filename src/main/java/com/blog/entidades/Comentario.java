@@ -5,7 +5,7 @@ public class Comentario {
     private String comentario;
     private int usuarioComentario;
     private int idPost;
-    private boolean autorizado;
+    private boolean autorizado = false;
 
     public Comentario() {
     }
@@ -55,4 +55,5 @@ public class Comentario {
     public void setAutorizado(boolean autorizado) {
         this.autorizado = autorizado;
     }
+
 }

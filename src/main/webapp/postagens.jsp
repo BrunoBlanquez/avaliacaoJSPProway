@@ -15,15 +15,6 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous" defer></script>
-    <style>
-        .ellipsis {
-            max-width: 150px;
-            text-overflow: ellipsis;
-            overflow: hidden;
-            white-space: nowrap;
-        }
-
-    </style>
 </head>
 <%
     Usuario usuarioLogado = (Usuario) session.getAttribute("usuario");
@@ -61,7 +52,7 @@
                         out.write("<tr>");
                         out.write("<td>" + p.getId() + "</td>");
                         out.write("<td>" + p.getTitulo() + "</td>");
-                        out.write("<td class=ellipsis>" + p.getDescricao() + "</td>");
+                        out.write("<td>" + p.getDescricao() + "</td>");
                         out.write("<td><a href='postcompleto.jsp?id=" + p.getId() + "'>" + "Ver mais" + "</a>" + "</td>");
                         if(logado) {
                             out.write("<td class=admin id=tdAdmin><a href='editar.jsp?id=" + p.getId() +"'>Editar</a></td>");
