@@ -102,10 +102,8 @@ public class DaoPost {
             try {
                 PreparedStatement stm = con.prepareStatement(sql);
                 stm.setString(1, p.getTitulo());
-
                 stm.setString(2, p.getDescricao());
                 stm.setInt(3, p.getId());
-
                 stm.execute();
                 return "Registro alterado com sucesso";
             } catch (SQLException e) {

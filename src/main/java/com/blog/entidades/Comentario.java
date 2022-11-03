@@ -10,7 +10,7 @@ public class Comentario {
     public Comentario() {
     }
 
-    public Comentario(String comentario, int usuarioComentario, int idPosto) {
+    public Comentario(String comentario, int usuarioComentario, int idPost) {
         this.comentario = comentario;
         this.usuarioComentario = usuarioComentario;
         this.idPost = idPost;

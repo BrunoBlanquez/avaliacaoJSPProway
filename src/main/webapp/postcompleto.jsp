@@ -33,7 +33,6 @@
     if(usuarioLogado != null) {
         logado = true;
     }
-    System.out.println(usuarioLogado.getTipo());
 %>
 
     <div class="position-absolute top-0 end-0">
@@ -75,12 +74,12 @@
 <%
     String comentario = request.getParameter("inputComentario");
     String post = request.getParameter("id");
+    int idUser = usuarioLogado.getId();
 
 
-
-
-    if(comentario != null) {
-       Comentario c = new Comentario();
+    if(comentario != null && !(comentario.isEmpty())) {
+        Comentario c = new Comentario(comentario, idUser, pegaIdParameter);
+        String retorno = DaoComentario.salvar(c);
         response.sendRedirect("postagens.jsp");
     }
 %>
